@@ -33,6 +33,9 @@ While compile to C source and then to executable is:
 $ valac --ccode --pkg gtk+-3.0 hello_gtk.vala
 $ cc hello_gtk.c `pkg-config --cflags --libs glib-2.0 gtk+-3.0` -o hello_gtk
 ```
+### Links
+https://wiki.gnome.org/Projects/Vala
+
 
 ## Genie
 * hello_genie.gs
@@ -56,9 +59,17 @@ Save file with .gs extension.
 Create executable with $ valac hello_genie.gs
 ```
 
+### Links
+
+https://wiki.gnome.org/Projects/Genie
 
 
 ## V
 * TBA
 
+### Links
+
+https://vlang.io/
+https://github.com/vlang/v
+https://github.com/vlang/v/tree/master/examples
 
