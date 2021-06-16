@@ -1,0 +1,133 @@
+
+
+ian@ian:~$ mkdir v
+ian@ian:~$ cd v
+ian@ian:~/v$ git clone https://github.com/vlang/v
+Cloning into 'v'...
+remote: Enumerating objects: 92259, done.
+remote: Counting objects: 100% (1106/1106), done.
+remote: Compressing objects: 100% (532/532), done.
+remote: Total 92259 (delta 657), reused 950 (delta 569), pack-reused 91153
+Receiving objects: 100% (92259/92259), 37.28 MiB | 8.90 MiB/s, done.
+Resolving deltas: 100% (65916/65916), done.
+ian@ian:~/v$ ls
+v
+ian@ian:~/v$ cd v
+ian@ian:~/v/v$ ls
+BSDmakefile   CODE_OF_CONDUCT.md  Dockerfile         examples  Makefile    TESTS.md    vlib
+CHANGELOG.md  CONTRIBUTING.md     Dockerfile.alpine  LICENSE   README.md   thirdparty  v.mod
+cmd           doc                 Dockerfile.cross   make.bat  ROADMAP.md  tutorials
+ian@ian:~/v/v$ make
+make fresh_vc
+make[1]: Entering directory '/home/ian/v/v'
+rm -rf ./vc
+git clone --depth 1 --quiet --single-branch https://github.com/vlang/vc ./vc
+make[1]: Leaving directory '/home/ian/v/v'
+cd ./vc && git clean -xf && git pull --quiet
+make fresh_tcc
+make[1]: Entering directory '/home/ian/v/v'
+rm -rf ./thirdparty/tcc
+git clone --depth 1 --quiet --single-branch --branch thirdparty-linux-amd64 https://github.com/vlang/tccbin ./thirdparty/tcc
+make[1]: Leaving directory '/home/ian/v/v'
+cd ./thirdparty/tcc && git clean -xf && git pull --quiet
+cc  -g -std=gnu99 -w -o ./v ./vc/v.c -lm -lpthread 
+./v -o v2.exe  cmd/v
+mv -f v2.exe v  
+V has been successfully built
+V 0.2.2 9dff3c3
+ian@ian:~/v/v$ 
+
+
+$ ./v --help
+V is a tool for managing V source code.
+
+Usage:
+   v [options] [command] [arguments]
+
+Examples:
+   v hello.v                 Compile the file `hello.v` and output it as `hello` or `hello.exe`.
+   v run hello.v             Same as above but also run the produced executable immediately after compilation.
+   v -cg run hello.v         Same as above, but make debugging easier (in case your program crashes).
+   v -o h.c hello.v          Translate `hello.v` to `h.c`. Do not compile further.
+
+   v watch hello.v           Re-does the same compilation, when a source code change is detected.
+                             The program is only compiled, not run.
+   v watch run hello.v       Re-runs the same `hello.v` file, when a source code change is detected.
+
+V supports the following commands:
+* New project scaffolding:
+   new               Setup the file structure for a V project (in a sub folder).
+   init              Setup the file structure for an already existing V project.
+
+* Ordinary development:
+   run               Compile and run a V program.
+   test              Run all test files in the provided directory.
+   fmt               Format the V code provided.
+   vet               Report suspicious code constructs.
+   doc               Generate the documentation for a V module.
+   vlib-docs         Generate and open the documentation of all the vlib modules.
+   repl              Run the REPL.
+   watch             Re-compile/re-run a source file, each time it is changed.
+
+* Installation/self updating:
+   symlink           Create a symbolic link for V.
+   up                Run the V self-updater.
+   self [-prod]      Run the V self-compiler, use -prod to optimize compilation.
+   version           Print the version text and exits.
+
+* Module/package management:
+   install           Install a module from VPM.
+   remove            Remove a module that was installed from VPM.
+   search            Search for a module from VPM.
+   update            Update an installed module from VPM.
+   upgrade           Upgrade all the outdated modules.
+   list              List all installed modules.
+   outdated          List installed modules that need updates.
+   show              Display information about a module on vpm
+
+* Others:
+   doctor            Display some useful info about your system to help reporting bugs.
+   translate         Translate C code to V (coming soon in 0.3).
+   tracev            Produce a tracing version of the v compiler.
+                     Use `tracev yourfile.v` when the compiler panics.
+                     NB: `tracev` is much slower and more verbose than ordinary `v`
+
+Use "v help <command>" for more information about a command, example: `v help build`, `v help build-c`, `v help build-native`
+Use "v help other" to see less frequently used commands.
+
+Note: Help is required to write more help topics.
+Only build, new, init, doc, fmt, vet, run, test, watch, search, install, remove, update, bin2v, check-md are properly documented currently.
+
+
+ian@ian:~/v/v$ ./v hello.v
+ian@ian:~/v/v$ ls
+BSDmakefile         CONTRIBUTING.md    Dockerfile.cross  LICENSE    ROADMAP.md  v
+CHANGELOG.md        doc                examples          make.bat   TESTS.md    vc
+cmd                 Dockerfile         hello             Makefile   thirdparty  vlib
+CODE_OF_CONDUCT.md  Dockerfile.alpine  hello.v           README.md  tutorials   v.mod
+ian@ian:~/v/v$ ./hello
+Hello, World! ...From Vlang or just V
+
+
+
+ian@ian:~/v/v$ ls examples
+2048                     fireworks          net_peer_ip.v                submodule
+asm.v                    fizz_buzz.v        net_raw_http.v               tcp_echo_server.v
+assets                   flappylearning     net_resolve.v                templates
+bfs.v                    game_of_life       net_t.v                      terminal_control.v
+binary_search_tree.v     get_weather        net_udp_server_and_client.v  term.ui
+buf_reader.v             gg                 news_fetcher.v               tetris
+c_interop_wkhtmltopdf.v  hanoi.v            path_tracing.v               tree_of_nodes.v
+cli.v                    hello_v_js.v       pendulum_sim                 ttf_font
+compiletime              hello_world.v      pico                         vcasino
+concurrency              hot_reload         process                      vmod.v
+database                 json.v             quick_sort.v                 vpwgen.v
+dump_factorial.v         lander.v           random_ips.v                 v_script.vsh
+dynamic_library_loading  linear_regression  regex                        vweb
+errors.v                 links_scraper.v    rune.v                       web_crawler
+eventbus                 log.v              smtp                         websocket
+fetch.v                  mini_calculator.v  snek                         word_counter
+fibonacci.v              native             sokol
+file_list.v              nbody.v            spectral.v
+
+
