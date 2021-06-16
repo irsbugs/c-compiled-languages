@@ -42,6 +42,21 @@ May be compiled to executable with:
 ```
 $ valac hello_genie.gs
 ```
+OR...
+
+```
+$ valac -C hello_genie.gs
+$ cc hello_genie.c `pkg-config --cflags --libs glib-2.0` -o hello_genie
+```
+Run the program...
+```
+$ ./hello_genie
+Hello, world! The Genie programming language
+Save file with .gs extension.
+Create executable with $ valac hello_genie.gs
+```
+
+
 
 ## V
 * TBA
